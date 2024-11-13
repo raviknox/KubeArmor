@@ -1,0 +1,23 @@
+name: AccuKnox SAST Workflow
+on:
+  schedule:
+    # Schedule the script to run at 09:00 AM IST on every day-of-week from Monday through Friday.
+    - cron: '30 11 * * 1-5'
+
+jobs:
+  sast-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run AccuKnox SAST
+        uses: udit-uniyal/accuknox-sast@v1.0.0
+        with:
+          sonar_token: ${{ secrets.SONAR_TOKEN }}
+          sonar_host_url: ${{ secrets.SONAR_HOST_URL }}
+          accuknox_endpoint: ${{ secrets.ACCUKNOX_ENDPOINT }}
+          tenant_id: ${{ secrets.TENANT_ID }}
+          accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
+          label: "cicdsast"
+          sonar_project_key: ""
